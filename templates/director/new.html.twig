@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un réalisateur{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Ajouter un réalisateur</h1>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_row(form.firstName, {attr: {class: 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.lastName, {attr: {class: 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.nationality, {attr: {class: 'form-control'}}) }}
+        </div>
+        <button class="btn btn-success" type="submit">Ajouter</button>
+        <a href="{{ path('app_directors') }}" class="btn btn-secondary">Annuler</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

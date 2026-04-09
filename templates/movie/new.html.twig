@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un film{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Ajouter un film</h1>
+    <a href="{{ path('app_director_new') }}" class="btn btn-warning btn-sm mb-3">✚ Ajouter un réalisateur</a>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_row(form.title, {attr: {class: 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.releaseYear, {attr: {class: 'form-control', type: 'number'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.genre, {attr: {class: 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.synopsis, {attr: {class: 'form-control', rows: '5'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.director, {attr: {class: 'form-select'}}) }}
+        </div>
+        <button class="btn btn-success" type="submit">Ajouter</button>
+        <a href="{{ path('app_movies') }}" class="btn btn-secondary">Annuler</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

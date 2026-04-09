@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>{{ movie.title }}</h1>
+    <p><strong>Année :</strong> {{ movie.releaseYear }}</p>
+    <p><strong>Genre :</strong> {{ movie.genre }}</p>
+    <p><strong>Réalisateur :</strong> <a href="{{ path('app_director_show', {id: movie.director.id}) }}">{{ movie.director.firstName }} {{ movie.director.lastName }}</a></p>
+
+    <hr>
+
+    <h3>Synopsis :</h3>
+    <p>{{ movie.synopsis }}</p>
+
+    <hr>
+    <a href="{{ path('app_movies') }}" class="btn btn-secondary">Retour</a>
+</div>
+{% endblock %}

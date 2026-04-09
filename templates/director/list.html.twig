@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réalisateurs{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Tous les réalisateurs</h1>
+    
+    <div class="mb-3">
+        <a href="{{ path('app_director_new') }}" class="btn btn-primary">Ajouter un réalisateur</a>
+        <a href="{{ path('app_movie_new') }}" class="btn btn-success">Ajouter un film</a>
+    </div>
+    
+    <div class="row">
+        {% for director in directors %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ director.firstName }} {{ director.lastName }}</h5>
+                    <p class="card-text">{{ director.nationality }}</p>
+                    <a href="{{ path('app_director_show', {id: director.id}) }}" class="btn btn-info btn-sm">Voir détails</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
