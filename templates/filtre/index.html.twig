@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Filtres API{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Filtres API</h1>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Réalisateur par nationalité</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Match partiel</p>
+                    <div class="input-group">
+                        <input type="text" id="nationalite" class="form-control" placeholder="ex: Français">
+                        <button class="btn btn-primary" onclick="filtrerNationalite()">Rechercher</button>
+                    </div>
+                    <pre id="result-nationalite" class="mt-3 bg-light p-2 rounded" style="max-height:300px;overflow:auto;font-size:12px;"></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Film par genre</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Match exact</p>
+                    <div class="input-group">
+                        <input type="text" id="genre" class="form-control" placeholder="ex: Action">
+                        <button class="btn btn-primary" onclick="filtrerGenre()">Rechercher</button>
+                    </div>
+                    <pre id="result-genre" class="mt-3 bg-light p-2 rounded" style="max-height:300px;overflow:auto;font-size:12px;"></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Film par réalisateur</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Match exact</p>
+                    <select id="director" class="form-select mb-2">
+                        <option value="">-- Choisir un réalisateur --</option>
+                        {% for director in directors %}
+                            <option value="/api/directors/{{ director.id }}">{{ director.firstName }} {{ director.lastName }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary w-100" onclick="filtrerDirecteur()">Rechercher</button>
+                    <pre id="result-director" class="mt-3 bg-light p-2 rounded" style="max-height:300px;overflow:auto;font-size:12px;"></pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function fetchApi(url, resultId) {
+    fetch(url, { headers: { 'Accept': 'application/json' } })
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById(resultId).textContent = JSON.stringify(data, null, 2);
+        });
+}
+
+function filtrerNationalite() {
+    const val = document.getElementById('nationalite').value;
+    fetchApi('/api/directors?nationality=' + encodeURIComponent(val), 'result-nationalite');
+}
+
+function filtrerGenre() {
+    const val = document.getElementById('genre').value;
+    fetchApi('/api/movies?genre=' + encodeURIComponent(val), 'result-genre');
+}
+
+function filtrerDirecteur() {
+    const val = document.getElementById('director').value;
+    if (!val) return;
+    fetchApi('/api/movies?director=' + encodeURIComponent(val), 'result-director');
+}
+</script>
+{% endblock %}
